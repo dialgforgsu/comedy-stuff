@@ -5,5 +5,9 @@ window.SITE_CONFIG = {
   // e.g. "https://github.com/YOUR-USER/comedy-festivals-jobs/issues/new/choose"
   submitUrl: "mailto:gsu.paek@gmail.com?subject=Listing%20submission",
   // Days before a submission deadline that the calendar reminder fires (.ics / Apple / Outlook).
-  reminderDaysBefore: 3
+  reminderDaysBefore: 3,
+  // Public address of the site, used for the subscribe-to-calendar links (festivals.ics).
+  siteUrl: "https://dialgforgsu.github.io/comedy-stuff/",
+  // Your Buttondown username (the part in buttondown.com/USERNAME). Leave "" and the email signup stays hidden.
+  newsletterUsername: ""
 };

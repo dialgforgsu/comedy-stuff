@@ -50,6 +50,27 @@ window.FESTIVALS = [
     url: "https://www.happyvalleyimprov.com/xlfest-submission-guidelines.html"
   },
   {
+    id: "phit-phest-2026", override: true,
+    name: "PHIT PHEST",
+    city: "Philadelphia, PA", country: "US", formats: ["Improv"],
+    deadlines: [{ label: "Submissions closed", date: "2026-10-23", fee: null }],
+    notes: "Submission deadline was Oct 23, 2026 at noon. Accepted acts are paid $60 per act/team. No submission fee listed.",
+    url: "https://phillyimprovtheater.com/",
+    confirmed: true, checked: "2026-10-30"
+  },
+  {
+    id: "last-word-2027", override: true,
+    name: "The Last Word Comedy Festival",
+    city: "Williamsburg, VA", country: "US", formats: ["Improv", "Stand-up"],
+    deadlines: [
+      { label: "Early bird", date: "2026-10-28", fee: "$20 improv / $15 stand-up" },
+      { label: "Final deadline", date: "2026-11-11", fee: "$25 improv / $20 stand-up" }
+    ],
+    notes: "Apply via the form on their submit page (video of a past performance). Use code COLLEGE to waive the fee for college groups. Their page gives conflicting early-bird dates (Oct 26 vs Oct 28), so confirm the cutoff.",
+    url: "https://www.lastwordfestival.com/submit",
+    confirmed: false, checked: "2026-10-30"
+  },
+  {
     id: "comedy-film-fest-2027",
     name: "The Comedy Film Festival",
     city: "Online / USA", country: "US", formats: ["Stand-up", "Sketch", "Film"],

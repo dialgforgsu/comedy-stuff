@@ -1,0 +1,47 @@
+name: Biweekly email digest
+
+# Runs every Monday but only does work on even ISO weeks, so it fires once every two weeks.
+# It creates a DRAFT in Buttondown; nothing is emailed until you review and send it.
+on:
+  schedule:
+    - cron: "30 14 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Skip odd weeks
+        id: week
+        run: |
+          w=$((10#$(date -u +%V)))
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ $((w % 2)) -eq 0 ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/checkout@v4
+        if: steps.week.outputs.run == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.week.outputs.run == 'true'
+        with:
+          node-version: 20
+      - name: Build digest and create Buttondown draft
+        if: steps.week.outputs.run == 'true'
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+        run: node scripts/digest.mjs
+      - name: Show digest in the run summary
+        if: steps.week.outputs.run == 'true'
+        run: if [ -f digest.md ]; then cat digest.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Remember what was included
+        if: steps.week.outputs.run == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/digest-state.json
+          if git diff --cached --quiet; then echo "No state change"; else
+            git commit -m "Update digest state"
+            git pull --rebase origin main
+            git push
+          fi

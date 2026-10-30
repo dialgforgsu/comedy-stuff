@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "description": "Static improv festival + comedy jobs board. `npm run update` refreshes the generated data files.",
-  "scripts": { "update": "node scripts/update.mjs" },
+  "scripts": { "update": "node scripts/update.mjs", "feed": "node scripts/build-feed.mjs", "digest": "node scripts/digest.mjs" },
   "engines": { "node": ">=20" },
   "dependencies": { "cheerio": "1.0.0" }
 }

@@ -40,6 +40,25 @@ This writes `data/festivals.generated.js` and `data/jobs.generated.js`. Don't ed
 | `data/jobs.js` | Hand-picked jobs and the job-board search links. |
 | `data/config.js` | Site name, "Submit a listing" link, reminder lead time. |
 
+## Calendar feed
+
+`festivals.ics` is rebuilt by the daily Action (`npm run feed`) and holds every upcoming deadline and event date. Visitors subscribe from the "Every deadline in your calendar" links, and their calendar keeps itself current. `siteUrl` in `data/config.js` must match your Pages URL.
+
+## Biweekly email digest
+
+Signup uses [Buttondown](https://buttondown.com) (free for small lists). The site never touches email addresses: the form posts straight to Buttondown, which does double opt-in (confirmation email) and adds an unsubscribe link to every message.
+
+1. Create a Buttondown account and put your username in `newsletterUsername` in `data/config.js`. Until then the signup box stays hidden.
+2. In Buttondown, create an API key and add it to the repo as the secret `BUTTONDOWN_API_KEY` (Settings, Secrets and variables, Actions).
+3. `.github/workflows/biweekly-digest.yml` runs on even ISO weeks, builds the digest (deadlines in the next 14 days, new festivals, new jobs) and creates a **draft** in Buttondown. You review and send it; nothing goes out automatically. Preview any time with `npm run digest -- --dry-run`.
+
+## Security notes
+
+- A Content-Security-Policy meta tag in `index.html` blocks inline and third-party scripts and limits form posts to buttondown.com. Keep scripts as files in this repo.
+- All page text is inserted with `textContent`, never `innerHTML`, so feed data can't inject markup.
+- No secrets live in the repo. The API key is a GitHub Actions secret used only by the digest workflow, and the digest strips markdown and non-https links from feed text before it becomes an email.
+- Saved festivals and the theme are stored only in the visitor's own browser.
+
 ## Preview locally
 
 Open `index.html` directly, or run `python -m http.server` in this folder.

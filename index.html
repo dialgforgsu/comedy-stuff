@@ -3,16 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Static hosting can't send security headers, so the policy is set here: no inline script, no third-party script, forms may only post to the newsletter provider. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action https://buttondown.com">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Improv Fest &amp; Jobs Board</title>
-  <meta name="description" content="Upcoming improv and comedy festivals with submission deadlines and fees, plus comedy jobs in the US and abroad. Add dates to Google or Apple Calendar.">
+  <meta name="description" content="Upcoming improv and comedy festivals with submission deadlines and fees, plus comedy jobs in the US. Add dates to Google or Apple Calendar.">
+  <link rel="canonical" href="https://dialgforgsu.github.io/comedy-stuff/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta property="og:type" content="website">
   <meta property="og:title" content="Improv Fest & Jobs Board">
   <meta property="og:description" content="Comedy festival submission deadlines, fees and jobs, with one-click calendar reminders.">
+  <meta property="og:url" content="https://dialgforgsu.github.io/comedy-stuff/">
+  <meta property="og:image" content="https://dialgforgsu.github.io/comedy-stuff/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="styles.css">
   <script src="data/config.js"></script>
+  <script src="theme-init.js"></script>
 </head>
 <body>
   <header class="top">
     <div class="wrap">
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch color theme"></button>
       <h1 id="siteName">Improv Fest &amp; Jobs Board</h1>
       <time id="updated" class="updated"></time>
       <p class="lede">Festival submission deadlines, fees and dates, plus comedy jobs. Add anything to your calendar.</p>
@@ -29,6 +40,12 @@
         <div class="soon-head"><h2 id="soonHead">Closing soon</h2><span id="soonCount" class="count"></span></div>
         <ol id="soonList" class="soon-list"></ol>
       </section>
+      <p class="feed" id="feedBar" hidden>
+        <strong>Every deadline in your calendar:</strong>
+        <a id="feedGoogle" href="#" target="_blank" rel="noopener">Subscribe in Google Calendar</a>
+        <a id="feedApple" href="#">Subscribe in Apple / Outlook</a>
+        <span>(stays up to date)</span>
+      </p>
       <h2 class="all-head">All festivals</h2>
       <div class="filters">
         <input id="fSearch" type="search" placeholder="Search festivals or cities" aria-label="Search festivals">
@@ -39,12 +56,20 @@
           <option value="">All formats</option><option>Improv</option><option>Sketch</option><option>Stand-up</option><option>Musical</option><option>Mixed</option><option>Film</option>
         </select>
         <select id="fStatus" aria-label="Status">
-          <option value="active">Open &amp; upcoming</option><option value="open">Open now</option><option value="all">Everything</option><option value="closed">Closed</option>
+          <option value="active">Open &amp; upcoming</option><option value="open">Open now</option><option value="saved">My saved list</option><option value="all">Everything</option><option value="closed">Closed</option>
         </select>
+        <select id="fSort" aria-label="Sort by">
+          <option value="deadline">Sort: deadline soonest</option><option value="event">Sort: event date</option><option value="fee">Sort: lowest fee</option><option value="name">Sort: name A–Z</option>
+        </select>
+        <button type="button" class="btn share" data-share>Copy link to this view</button>
       </div>
       <p id="fCount" class="count" aria-live="polite"></p>
+      <div id="savedBar" class="saved-bar" hidden>
+        <span id="savedCount"></span>
+        <button id="savedIcs" type="button" class="btn primary">Add all saved to calendar (.ics)</button>
+      </div>
       <div id="fList" class="grid"></div>
-      <p class="fine">Deadlines and fees change. Cards marked <b>Verify</b> have not been confirmed on the festival's own site, so check before you pay a fee.</p>
+      <p class="fine">Deadlines and fees change. Cards marked <b>Verify</b> have not been confirmed on the festival's own site, so check before you pay a fee. The ☆ saves a festival in this browser only.</p>
     </section>
 
     <section id="jobs" role="tabpanel" aria-labelledby="tab-jobs" hidden>
@@ -59,6 +84,10 @@
         <select id="jType" aria-label="Type">
           <option value="">All types</option><option>Teaching</option><option>Production</option><option>Writing</option><option>Performing</option><option>Management</option><option>Marketing</option><option>Admin</option>
         </select>
+        <select id="jSort" aria-label="Sort by">
+          <option value="newest">Sort: newest first</option><option value="oldest">Sort: oldest first</option><option value="title">Sort: title A–Z</option><option value="org">Sort: employer A–Z</option>
+        </select>
+        <button type="button" class="btn share" data-share>Copy link to this view</button>
       </div>
       <p id="jCount" class="count" aria-live="polite"></p>
       <div id="jList" class="grid"></div>
@@ -66,11 +95,25 @@
       <ul id="boards" class="boards"></ul>
       <p class="fine">Listings are pulled from <a href="https://www.entertainmentcareers.net/">EntertainmentCareers.net</a>, comedy-related and US-based only, restaurant roles excluded. Indeed and ZipRecruiter don't allow automated collection, so those links open a pre-filtered search on their sites. Confirm a job is still open before applying.</p>
     </section>
+
+    <section id="signup" class="signup" aria-labelledby="signupHead" hidden>
+      <h2 id="signupHead">Get the biweekly digest</h2>
+      <p>One email every two weeks: new festivals, deadlines closing soon and new comedy jobs. You'll get a confirmation email first, and every message has an unsubscribe link. Your address goes to the email provider (Buttondown), not to this site.</p>
+      <form id="signupForm" method="post" target="_blank" rel="noopener" novalidate>
+        <label for="signupEmail" class="sr">Email address</label>
+        <input id="signupEmail" name="email" type="email" required autocomplete="email" maxlength="254" placeholder="you@example.com">
+        <input type="hidden" name="embed" value="1">
+        <button type="submit" class="btn primary">Subscribe</button>
+      </form>
+      <p id="signupMsg" class="fine" role="status"></p>
+    </section>
   </main>
 
   <footer class="wrap foot">
     <a id="submitLink" href="#">Submit a festival or job</a>
     <span>·</span>
+    <a id="signupLink" href="#signup" hidden>Biweekly email digest</a>
+    <span id="signupDot" hidden>·</span>
     <span>Festival data from <a href="https://improvfestivals.org">improvfestivals.org</a> (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>), festival websites and hand edits.</span>
   </footer>
 

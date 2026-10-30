@@ -120,6 +120,57 @@
     return el("div", { class: "cal-row" }, [label ? el("span", { text: label }) : null, g, i]);
   }
 
+  // ---------- saved list (this browser only) ----------
+  var saved = [];
+  try { saved = JSON.parse(localStorage.getItem("savedFestivals") || "[]"); if (!Array.isArray(saved)) saved = []; } catch (e) { saved = []; }
+  function persistSaved() { try { localStorage.setItem("savedFestivals", JSON.stringify(saved)); } catch (e) {} }
+  function starButton(f) {
+    var b = el("button", { class: "star", type: "button" });
+    function paint() {
+      var on = saved.indexOf(f.id) >= 0;
+      b.textContent = on ? "★" : "☆";
+      b.setAttribute("aria-pressed", String(on));
+      b.setAttribute("aria-label", (on ? "Remove " : "Save ") + f.name + (on ? " from" : " to") + " my list");
+    }
+    b.addEventListener("click", function () {
+      var i = saved.indexOf(f.id);
+      if (i >= 0) saved.splice(i, 1); else saved.push(f.id);
+      persistSaved();
+      if ($("fStatus").value === "saved") renderFestivals(); else { paint(); renderSavedBar(); }
+    });
+    paint();
+    return b;
+  }
+  function renderSavedBar() {
+    var n = FESTIVALS.filter(function (f) { return saved.indexOf(f.id) >= 0; }).length;
+    $("savedBar").hidden = n === 0;
+    $("savedCount").textContent = n + (n === 1 ? " festival saved" : " festivals saved") + " in this browser";
+  }
+  function festivalEvents(f) {
+    var loc = f.city + (f.country && f.country !== "US" ? ", " + f.country : "");
+    var out = [];
+    f.deadlines.forEach(function (d) {
+      if (daysUntil(d.date) < 0) return;
+      out.push(icsEvent(f.id + "-deadline-" + d.date, "Submission deadline: " + f.name, d.date, d.date, d.label + " for " + f.name + (d.fee ? " (fee " + d.fee + ")" : "") + ". Details: " + f.url, loc, CFG.reminderDaysBefore || 3));
+    });
+    if (f.eventStart && daysUntil(f.eventEnd || f.eventStart) >= 0)
+      out.push(icsEvent(f.id + "-event-" + f.eventStart, f.name, f.eventStart, f.eventEnd, "Details: " + f.url, loc, 0));
+    return out;
+  }
+
+  // Lowest dollar amount mentioned in the fee fields, 0 for "free", null when no fee is published.
+  function minFee(f) {
+    var vals = [];
+    f.deadlines.forEach(function (d) { if (d.fee) vals.push(d.fee); });
+    if (f.fee) vals.push(f.fee);
+    var nums = [];
+    vals.forEach(function (s) {
+      if (/\bfree\b/i.test(s)) nums.push(0);
+      (String(s).match(/\d+(?:\.\d+)?/g) || []).forEach(function (n) { nums.push(+n); });
+    });
+    return nums.length ? Math.min.apply(null, nums) : null;
+  }
+
   // ---------- festival cards ----------
   function festivalCard(f) {
     var st = status(f);
@@ -127,7 +178,7 @@
     if (!f.confirmed) badges.appendChild(el("span", { class: "badge check", text: "Verify", title: "Not yet confirmed on the festival's own site" }));
     f.formats.forEach(function (x) { badges.appendChild(el("span", { class: "badge fmt", text: x })); });
 
-    var title = el("h3", {}, [el("a", { href: f.url, target: "_blank", rel: "noopener", text: f.name })]);
+    var title = el("div", { class: "card-head" }, [el("h3", {}, [el("a", { href: f.url, target: "_blank", rel: "noopener", text: f.name })]), starButton(f)]);
 
     var dl = el("dl");
     function row(k, v) { dl.appendChild(el("dt", { text: k })); dl.appendChild(el("dd", { text: v })); }
@@ -164,27 +215,39 @@
   }
 
   function renderFestivals() {
-    var q = $("fSearch").value.trim().toLowerCase(), region = $("fRegion").value, format = $("fFormat").value, stf = $("fStatus").value;
+    var q = $("fSearch").value.trim().toLowerCase(), region = $("fRegion").value, format = $("fFormat").value, stf = $("fStatus").value, sort = $("fSort").value;
     var list = FESTIVALS.filter(function (f) {
       var s = status(f);
       if (q && (f.name + " " + f.city + " " + f.country).toLowerCase().indexOf(q) < 0) return false;
       if (region === "US" && !isUS(f)) return false;
       if (region === "Intl" && isUS(f)) return false;
       if (format && f.formats.indexOf(format) < 0) return false;
+      if (stf === "saved") return saved.indexOf(f.id) >= 0;
       if (stf === "active") return s.key !== "closed";
       if (stf === "open") return s.key === "open" || s.key === "soon";
       if (stf === "closed") return s.key === "closed";
       return true;
-    }).sort(function (a, b) {
+    });
+    // Unknown values always sort last, whichever way the list is ordered.
+    function byName(a, b) { return a.name.localeCompare(b.name); }
+    list.sort(function (a, b) {
+      if (sort === "name") return byName(a, b);
+      if (sort === "event") return (a.eventStart || "9").localeCompare(b.eventStart || "9") || byName(a, b);
+      if (sort === "fee") {
+        var fa = minFee(a), fb = minFee(b);
+        if ((fa == null) !== (fb == null)) return fa == null ? 1 : -1;
+        return (fa || 0) - (fb || 0) || byName(a, b);
+      }
       var sa = status(a), sb = status(b);
       if (sa.rank !== sb.rank) return sa.rank - sb.rank;
-      if (sa.rank <= 1) return (sa.left - sb.left);
-      return (a.eventStart || "9").localeCompare(b.eventStart || "9");
+      if (sa.rank <= 1) return (sa.left - sb.left) || byName(a, b);
+      return (a.eventStart || "9").localeCompare(b.eventStart || "9") || byName(a, b);
     });
     var box = $("fList"); box.textContent = "";
     $("fCount").textContent = list.length + (list.length === 1 ? " festival" : " festivals");
-    if (!list.length) box.appendChild(el("div", { class: "empty", text: "No festivals match those filters." }));
+    if (!list.length) box.appendChild(el("div", { class: "empty", text: stf === "saved" ? "Nothing saved yet. Tap ☆ on a festival to add it here." : "No festivals match those filters." }));
     list.forEach(function (f) { box.appendChild(festivalCard(f)); });
+    renderSavedBar();
   }
 
   // ---------- closing soon ----------
@@ -261,6 +324,15 @@
       if (maxAge && (jobAge(j) == null || jobAge(j) > +maxAge)) return false;
       return true;
     });
+    var sort = $("jSort").value;
+    function age(j) { return j.posted || ""; }
+    list.sort(function (a, b) {
+      if (sort === "title") return a.title.localeCompare(b.title);
+      if (sort === "org") return a.org.localeCompare(b.org) || a.title.localeCompare(b.title);
+      // Undated jobs go last in both date orders.
+      if (!age(a) !== !age(b)) return age(a) ? -1 : 1;
+      return (sort === "oldest" ? age(a).localeCompare(age(b)) : age(b).localeCompare(age(a))) || a.title.localeCompare(b.title);
+    });
     var box = $("jList"); box.textContent = "";
     $("jCount").textContent = list.length + (list.length === 1 ? " job" : " jobs");
     if (!list.length) box.appendChild(el("div", { class: "empty", text: "No jobs match those filters. Try the boards below." }));
@@ -273,14 +345,102 @@
     });
   }
 
+  // ---------- shareable filters ----------
+  // Every control that isn't at its default value is written to the query string, so any view can be linked.
+  var URL_FIELDS = { fSearch: "q", fRegion: "region", fFormat: "format", fStatus: "status", fSort: "sort", jSearch: "jq", jRegion: "jregion", jAge: "jage", jType: "jtype", jSort: "jsort" };
+  var currentTab = "festivals";
+  function defaultOf(id) { var n = $(id); return n.tagName === "SELECT" ? n.options[0].value : ""; }
+  function syncUrl() {
+    var p = new URLSearchParams();
+    Object.keys(URL_FIELDS).forEach(function (id) {
+      var v = $(id).value.trim();
+      if (v && v !== defaultOf(id)) p.set(URL_FIELDS[id], v);
+    });
+    var qs = p.toString();
+    try { history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + (currentTab === "jobs" ? "#jobs" : "")); } catch (e) {}
+  }
+  function loadUrl() {
+    var p = new URLSearchParams(location.search);
+    Object.keys(URL_FIELDS).forEach(function (id) {
+      var v = p.get(URL_FIELDS[id]), n = $(id);
+      if (v == null) return;
+      if (n.tagName === "SELECT") {
+        // Ignore values that aren't real options (a hand-edited link can't inject anything).
+        for (var i = 0; i < n.options.length; i++) if (n.options[i].value === v) n.value = v;
+      } else n.value = v.slice(0, 100);
+    });
+  }
+  function bindShare() {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-share]"), function (b) {
+      var label = b.textContent;
+      b.addEventListener("click", function () {
+        syncUrl();
+        function done(ok) { b.textContent = ok ? "Link copied" : "Copy it from the address bar"; setTimeout(function () { b.textContent = label; }, 2000); }
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(location.href).then(function () { done(true); }, function () { done(false); });
+        else done(false);
+      });
+    });
+  }
+
   // ---------- tabs ----------
   function showTab(name) {
+    currentTab = name;
     ["festivals", "jobs"].forEach(function (t) {
       $(t).hidden = t !== name;
       $("tab-" + t).setAttribute("aria-selected", String(t === name));
     });
-    if (location.hash.slice(1) !== name) history.replaceState(null, "", "#" + name);
+    syncUrl();
   }
+
+  // ---------- theme ----------
+  (function () {
+    var root = document.documentElement, btn = $("themeToggle");
+    var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : { matches: false };
+    function current() { return root.dataset.theme || (mq.matches ? "dark" : "light"); }
+    function paint() { btn.textContent = current() === "dark" ? "☀ Light" : "☾ Dark"; }
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      paint();
+    });
+    paint();
+  })();
+
+  // ---------- calendar feed + saved download ----------
+  (function () {
+    var base = (CFG.siteUrl || "").replace(/\/?$/, "/");
+    if (!/^https:\/\//.test(base)) return;
+    var feed = base + "festivals.ics", webcal = feed.replace(/^https:/, "webcal:");
+    $("feedGoogle").href = "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(webcal);
+    $("feedApple").href = webcal;
+    $("feedBar").hidden = false;
+  })();
+  $("savedIcs").addEventListener("click", function () {
+    var events = [];
+    FESTIVALS.forEach(function (f) { if (saved.indexOf(f.id) >= 0) events = events.concat(festivalEvents(f)); });
+    if (events.length) downloadIcs("my-festivals.ics", events);
+  });
+
+  // ---------- newsletter signup ----------
+  // The form posts straight to the email provider (double opt-in, unsubscribe link in every email).
+  // No address is handled or stored by this site. Hidden until data/config.js has a valid username.
+  (function () {
+    var user = String(CFG.newsletterUsername || "");
+    if (!/^[A-Za-z0-9_-]{1,64}$/.test(user)) return;
+    var form = $("signupForm"), msg = $("signupMsg");
+    form.action = "https://buttondown.com/api/emails/embed-subscribe/" + user;
+    form.addEventListener("submit", function (e) {
+      var v = $("signupEmail").value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || v.length > 254) {
+        e.preventDefault();
+        msg.textContent = "Please enter a valid email address.";
+        return;
+      }
+      msg.textContent = "Check your inbox for a confirmation email to finish signing up.";
+    });
+    $("signup").hidden = false; $("signupLink").hidden = false; $("signupDot").hidden = false;
+  })();
 
   // ---------- init ----------
   document.title = CFG.siteName || document.title;
@@ -294,11 +454,13 @@
     t.textContent = "Data updated " + newest.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) + " (" + (newest.toLocaleTimeString(undefined, { timeZoneName: "short" }).split(" ").pop()) + ")";
     t.setAttribute("datetime", newest.toISOString());
   }
+  loadUrl();
   renderSoon();
-  ["fSearch", "fRegion", "fFormat", "fStatus"].forEach(function (id) { $(id).addEventListener("input", renderFestivals); });
-  ["jSearch", "jRegion", "jType", "jAge"].forEach(function (id) { $(id).addEventListener("input", renderJobs); });
+  ["fSearch", "fRegion", "fFormat", "fStatus", "fSort"].forEach(function (id) { $(id).addEventListener("input", function () { renderFestivals(); syncUrl(); }); });
+  ["jSearch", "jRegion", "jType", "jAge", "jSort"].forEach(function (id) { $(id).addEventListener("input", function () { renderJobs(); syncUrl(); }); });
   $("tab-festivals").addEventListener("click", function () { showTab("festivals"); });
   $("tab-jobs").addEventListener("click", function () { showTab("jobs"); });
+  bindShare();
   renderFestivals(); renderJobs(); renderBoards();
   if (location.hash === "#jobs") showTab("jobs");
 })();

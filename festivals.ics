@@ -1,0 +1,666 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//comedy-stuff//festivals//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Improv festival deadlines
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:birmingham-improv-festival-event-2026-11-04@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261104
+DTEND;VALUE=DATE:20261109
+SUMMARY:Birmingham Improv Festival
+DESCRIPTION:Details: https://birminghamimprovfestival.com/
+LOCATION:Birmingham\, United Kingdom
+END:VEVENT
+BEGIN:VEVENT
+UID:third-coast-improv-fest-event-2026-11-04@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261104
+DTEND;VALUE=DATE:20261109
+SUMMARY:Third Coast Improv Fest
+DESCRIPTION:Details: https://www.thirdcoastimprovfest.com/
+LOCATION:Nashville\, Tennessee
+END:VEVENT
+BEGIN:VEVENT
+UID:bellingham-improv-festival-event-2026-11-05@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261109
+SUMMARY:Bellingham Improv Festival
+DESCRIPTION:Details: https://www.theupfront.com/bif
+LOCATION:Bellingham\, WA
+END:VEVENT
+BEGIN:VEVENT
+UID:ifo-impro-fest-bielefeld-event-2026-11-05@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261109
+SUMMARY:IFO Impro Fest Bielefeld
+DESCRIPTION:Details: https://www.improfestonline.de
+LOCATION:Bielefeld\, Germany
+END:VEVENT
+BEGIN:VEVENT
+UID:kalamazoo-improv-festival-event-2026-11-05@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261108
+SUMMARY:Kalamazoo Improv Festival
+DESCRIPTION:Details: https://crawlspacecomedy.com/kalamazoo-improv-fest/
+LOCATION:Kalamazoo\, Michigan
+END:VEVENT
+BEGIN:VEVENT
+UID:out-of-bounds-comedy-festival-event-2026-11-05@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261105
+DTEND;VALUE=DATE:20261109
+SUMMARY:Out of Bounds Comedy Festival
+DESCRIPTION:Details: https://oobfest.com/
+LOCATION:Austin\, TX
+END:VEVENT
+BEGIN:VEVENT
+UID:tucson-comedy-arts-festival-event-2026-11-06@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261106
+DTEND;VALUE=DATE:20261115
+SUMMARY:Tucson Comedy Arts Festival
+DESCRIPTION:Details: https://www.tucsonimprov.com/tcaf
+LOCATION:Tucson\, Arizona
+END:VEVENT
+BEGIN:VEVENT
+UID:queer-and-funny-improv-festival-event-2026-11-07@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261107
+DTEND;VALUE=DATE:20261109
+SUMMARY:Queer and Funny Improv Festival
+DESCRIPTION:Details: https://www.queerandfunny.com/
+LOCATION:Minneapolis\, MN
+END:VEVENT
+BEGIN:VEVENT
+UID:improfest-krakow-event-2026-11-10@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261110
+DTEND;VALUE=DATE:20261115
+SUMMARY:ImproFest Kraków
+DESCRIPTION:Details: https://improfest.pl/
+LOCATION:Kraków\, Poland
+END:VEVENT
+BEGIN:VEVENT
+UID:flyover-comedy-festival-event-2026-11-11@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261116
+SUMMARY:Flyover Comedy Festival
+DESCRIPTION:Details: https://www.flyovercomedyfest.com/
+LOCATION:St. Louis\, MO
+END:VEVENT
+BEGIN:VEVENT
+UID:new-south-comedy-festival-event-2026-11-11@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261116
+SUMMARY:New South Comedy Festival
+DESCRIPTION:Details: https://newsouthcomedy.com/
+LOCATION:Greenville\, SC
+END:VEVENT
+BEGIN:VEVENT
+UID:montclair-comedy-festival-event-2026-11-14@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261122
+SUMMARY:Montclair Comedy Festival
+DESCRIPTION:Details: https://montclaircomedyfestival.com/
+LOCATION:Montclair\, NJ
+END:VEVENT
+BEGIN:VEVENT
+UID:impulsez-event-2026-11-20@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261129
+SUMMARY:Impulsez!
+DESCRIPTION:Details: https://impulsez.org/
+LOCATION:Toulouse\, France
+END:VEVENT
+BEGIN:VEVENT
+UID:phit-phest-event-2026-11-20@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261122
+SUMMARY:PHIT PHEST
+DESCRIPTION:Details: https://phillyimprovtheater.com/
+LOCATION:Philadelphia\, PA
+END:VEVENT
+BEGIN:VEVENT
+UID:impro-invention-2026-event-2026-12-07@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261207
+DTEND;VALUE=DATE:20261214
+SUMMARY:Impro INvention 2026
+DESCRIPTION:Details: https://impro.com.au/
+LOCATION:Canberra\, ACT\, Australia
+END:VEVENT
+BEGIN:VEVENT
+UID:improv-festivus-deadline-2026-10-31@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261031
+DTEND;VALUE=DATE:20261101
+SUMMARY:Deadline: Improv Festivus
+DESCRIPTION:Submissions close for Improv Festivus. Details: https://www.im
+ provfestivus.com/
+LOCATION:Richmond\, VA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Improv Festivus
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:improv-festivus-event-2026-12-10@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261213
+SUMMARY:Improv Festivus
+DESCRIPTION:Details: https://www.improvfestivus.com/
+LOCATION:Richmond\, VA
+END:VEVENT
+BEGIN:VEVENT
+UID:sf-sketchfest-event-2027-01-14@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270114
+DTEND;VALUE=DATE:20270201
+SUMMARY:SF Sketchfest
+DESCRIPTION:Details: https://sfsketchfest.com/
+LOCATION:San Francisco\, CA
+END:VEVENT
+BEGIN:VEVENT
+UID:wasatch-improv-festival-deadline-2026-11-01@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:Deadline: Wasatch Improv Festival
+DESCRIPTION:Submissions close for Wasatch Improv Festival. Details: https:
+ //www.wasatchimprov.com/
+LOCATION:West Jordan\, UT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Wasatch Improv Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wasatch-improv-festival-event-2027-01-21@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270121
+DTEND;VALUE=DATE:20270124
+SUMMARY:Wasatch Improv Festival
+DESCRIPTION:Details: https://www.wasatchimprov.com/
+LOCATION:West Jordan\, UT
+END:VEVENT
+BEGIN:VEVENT
+UID:steelstacks-improv-comedy-festival-deadline-2026-11-13@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+SUMMARY:Deadline: SteelStacks Improv Comedy Festival
+DESCRIPTION:Final deadline for SteelStacks Improv Comedy Festival (fee $25
+ ). Details: https://www.artsquest.org/festivals/more-festivals-and-experi
+ ences/steelstacks-improv-comedy-festival/
+LOCATION:Bethlehem\, PA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: SteelStacks Improv Comedy Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:steelstacks-improv-comedy-festival-event-2027-01-22@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270122
+DTEND;VALUE=DATE:20270125
+SUMMARY:SteelStacks Improv Comedy Festival
+DESCRIPTION:Details: https://www.artsquest.org/festivals/more-festivals-an
+ d-experiences/steelstacks-improv-comedy-festival/
+LOCATION:Bethlehem\, PA
+END:VEVENT
+BEGIN:VEVENT
+UID:the-heat-event-2027-01-26@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270126
+DTEND;VALUE=DATE:20270201
+SUMMARY:The Heat: An International Improv Comedy Showcase
+DESCRIPTION:Details: https://theimprovcentre.ca/the-heat/
+LOCATION:Vancouver\, British Columbia\, Canada
+END:VEVENT
+BEGIN:VEVENT
+UID:oxford-improv-festival-event-2027-01-27@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270127
+DTEND;VALUE=DATE:20270201
+SUMMARY:Oxford Improv Festival
+DESCRIPTION:Details: https://oxfordimprovfest.com/
+LOCATION:Oxford\, United Kingdom
+END:VEVENT
+BEGIN:VEVENT
+UID:last-word-comedy-festival-deadline-2026-11-11@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+SUMMARY:Deadline: The Last Word Comedy Festival
+DESCRIPTION:Final deadline for The Last Word Comedy Festival (fee $25 impr
+ ov / $20 stand-up). Details: https://www.lastwordfestival.com/submit
+LOCATION:Williamsburg\, VA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: The Last Word Comedy Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:last-word-comedy-festival-event-2027-01-28@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270128
+DTEND;VALUE=DATE:20270201
+SUMMARY:The Last Word Comedy Festival
+DESCRIPTION:Details: https://www.lastwordfestival.com/submit
+LOCATION:Williamsburg\, VA
+END:VEVENT
+BEGIN:VEVENT
+UID:edinburgh-international-improv-festival-event-2027-02-04@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270204
+DTEND;VALUE=DATE:20270208
+SUMMARY:Edinburgh International Improv Festival
+DESCRIPTION:Details: https://www.edimprovfest.com/apply
+LOCATION:Edinburgh\, Scotland\, UK
+END:VEVENT
+BEGIN:VEVENT
+UID:sonoran-all-valley-improv-fest-event-2027-02-19@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270219
+DTEND;VALUE=DATE:20270222
+SUMMARY:Sonoran All-Valley Improv (SAVI) Fest
+DESCRIPTION:Details: https://savifest.com/
+LOCATION:Mesa\, AZ
+END:VEVENT
+BEGIN:VEVENT
+UID:impro-amsterdam-event-2027-02-20@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270220
+DTEND;VALUE=DATE:20270228
+SUMMARY:IMPRO Amsterdam
+DESCRIPTION:Details: https://www.impro-amsterdam.nl
+LOCATION:Amsterdam\, Netherlands
+END:VEVENT
+BEGIN:VEVENT
+UID:women-are-funny-festival-event-2027-03-03@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270303
+DTEND;VALUE=DATE:20270308
+SUMMARY:Women Are Funny Festival
+DESCRIPTION:Details: https://www.amsterdamcomedystudio.nl/womenarefunnyfes
+ tival
+LOCATION:Amsterdam\, Netherlands
+END:VEVENT
+BEGIN:VEVENT
+UID:idaho-improvathon-festival-deadline-2026-11-15@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261115
+DTEND;VALUE=DATE:20261116
+SUMMARY:Deadline: Idaho Improvathon Festival
+DESCRIPTION:Submissions close for Idaho Improvathon Festival. Details: htt
+ ps://www.tcpimprov.org/improvathon
+LOCATION:Pocatello\, ID
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Idaho Improvathon Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:idaho-improvathon-festival-event-2027-03-04@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270304
+DTEND;VALUE=DATE:20270307
+SUMMARY:Idaho Improvathon Festival
+DESCRIPTION:Details: https://www.tcpimprov.org/improvathon
+LOCATION:Pocatello\, ID
+END:VEVENT
+BEGIN:VEVENT
+UID:torn-hamburg-impro-festival-event-2027-03-11@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270311
+DTEND;VALUE=DATE:20270315
+SUMMARY:TÖRN Improfestival
+DESCRIPTION:Details: https://improfestival-hamburg.de/
+LOCATION:Hamburg\, Germany
+END:VEVENT
+BEGIN:VEVENT
+UID:playground-comedy-festival-deadline-2026-10-31@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261031
+DTEND;VALUE=DATE:20261101
+SUMMARY:Deadline: PlayGround Comedy Festival
+DESCRIPTION:Submissions close for PlayGround Comedy Festival. Details: htt
+ ps://playground-sf.org/comedyfestival/
+LOCATION:San Francisco\, CA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: PlayGround Comedy Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:playground-comedy-festival-event-2027-03-12@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270312
+DTEND;VALUE=DATE:20270405
+SUMMARY:PlayGround Comedy Festival
+DESCRIPTION:Details: https://playground-sf.org/comedyfestival/
+LOCATION:San Francisco\, CA
+END:VEVENT
+BEGIN:VEVENT
+UID:the-nestival-festival-deadline-2027-01-08@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270108
+DTEND;VALUE=DATE:20270109
+SUMMARY:Deadline: The Nestival Festival
+DESCRIPTION:Submissions close for The Nestival Festival. Details: https://
+ thenestival.com/
+LOCATION:Columbus\, OH
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: The Nestival Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:the-nestival-festival-event-2027-03-25@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270325
+DTEND;VALUE=DATE:20270405
+SUMMARY:The Nestival Festival
+DESCRIPTION:Details: https://thenestival.com/
+LOCATION:Columbus\, OH
+END:VEVENT
+BEGIN:VEVENT
+UID:narrativa-improv-fest-deadline-2026-12-13@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261213
+DTEND;VALUE=DATE:20261214
+SUMMARY:Deadline: Narrativa Improv Fest
+DESCRIPTION:Submissions close for Narrativa Improv Fest. Details: https://
+ www.narrativaimprovfest.com/
+LOCATION:Valencia\, Spain
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Narrativa Improv Fest
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:narrativa-improv-fest-event-2027-04-08@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270408
+DTEND;VALUE=DATE:20270412
+SUMMARY:Narrativa Improv Fest
+DESCRIPTION:Details: https://www.narrativaimprovfest.com/
+LOCATION:Valencia\, Spain
+END:VEVENT
+BEGIN:VEVENT
+UID:impro-improfestival-berlin-event-2027-04-12@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270412
+DTEND;VALUE=DATE:20270419
+SUMMARY:IMPRO - Internationales Improfestival Berlin
+DESCRIPTION:Details: http://www.improfestival.de
+LOCATION:Berlin\, Germany
+END:VEVENT
+BEGIN:VEVENT
+UID:northwest-improv-fest-deadline-2026-11-13@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+SUMMARY:Deadline: Northwest Improv Fest
+DESCRIPTION:Submissions close for Northwest Improv Fest. Details: https://
+ nwimprovfest.com/
+LOCATION:Spokane\, WA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Northwest Improv Fest
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:northwest-improv-fest-event-2027-04-15@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270415
+DTEND;VALUE=DATE:20270418
+SUMMARY:Northwest Improv Fest
+DESCRIPTION:Details: https://nwimprovfest.com/
+LOCATION:Spokane\, WA
+END:VEVENT
+BEGIN:VEVENT
+UID:hi-desert-comedy-campout-deadline-2027-01-01@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:Deadline: Hi-Desert Comedy Campout
+DESCRIPTION:Submissions close for Hi-Desert Comedy Campout. Details: https
+ ://www.desertcomedycampout.com/
+LOCATION:Wonder Valley\, CA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Hi-Desert Comedy Campout
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:hi-desert-comedy-campout-event-2027-04-16@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270416
+DTEND;VALUE=DATE:20270418
+SUMMARY:Hi-Desert Comedy Campout
+DESCRIPTION:Details: https://www.desertcomedycampout.com/
+LOCATION:Wonder Valley\, CA
+END:VEVENT
+BEGIN:VEVENT
+UID:mobile-improv-comedy-carnival-deadline-2026-12-31@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261231
+DTEND;VALUE=DATE:20270101
+SUMMARY:Deadline: Mobile Improv Comedy Carnival
+DESCRIPTION:Submissions close for Mobile Improv Comedy Carnival. Details: 
+ https://improvcarnival.org
+LOCATION:Mobile\, AL
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Mobile Improv Comedy Carnival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:mobile-improv-comedy-carnival-event-2027-04-16@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270416
+DTEND;VALUE=DATE:20270418
+SUMMARY:Mobile Improv Comedy Carnival
+DESCRIPTION:Details: https://improvcarnival.org
+LOCATION:Mobile\, AL
+END:VEVENT
+BEGIN:VEVENT
+UID:auckland-improv-festival-event-2027-04-17@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270417
+DTEND;VALUE=DATE:20270425
+SUMMARY:Auckland Improv Festival
+DESCRIPTION:Details: https://www.aucklandimprovfestival.com
+LOCATION:Auckland\, New Zealand
+END:VEVENT
+BEGIN:VEVENT
+UID:festival-dimpro-de-quebec-event-2027-04-22@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270422
+DTEND;VALUE=DATE:20270503
+SUMMARY:Festival d'Impro de Québec
+DESCRIPTION:Details: https://festivaldimprodequebec.com/
+LOCATION:Quebec City\, QC\, Canada
+END:VEVENT
+BEGIN:VEVENT
+UID:vietnam-improv-festival-deadline-2026-10-31@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261031
+DTEND;VALUE=DATE:20261101
+SUMMARY:Deadline: Vietnam Improv Festival
+DESCRIPTION:Submissions close for Vietnam Improv Festival. Details: https:
+ //www.improv.vn/festival/
+LOCATION:Hanoi\, Vietnam
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Vietnam Improv Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:vietnam-improv-festival-event-2027-04-24@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270424
+DTEND;VALUE=DATE:20270503
+SUMMARY:Vietnam Improv Festival
+DESCRIPTION:Details: https://www.improv.vn/festival/
+LOCATION:Hanoi\, Vietnam
+END:VEVENT
+BEGIN:VEVENT
+UID:liverpool-improvisation-festival-event-2027-05-06@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270506
+DTEND;VALUE=DATE:20270510
+SUMMARY:Liverpool Improvisation Festival
+DESCRIPTION:Details: https://www.liverpoolimprovfestival.com/
+LOCATION:Liverpool\, United Kingdom
+END:VEVENT
+BEGIN:VEVENT
+UID:xl-festival-deadline-2027-01-15@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270116
+SUMMARY:Deadline: XL Festival
+DESCRIPTION:Submissions close for XL Festival. Details: https://www.happyv
+ alleyimprov.com/xlfest.html
+LOCATION:State College\, PA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: XL Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:xl-festival-event-2027-05-20@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270520
+DTEND;VALUE=DATE:20270524
+SUMMARY:XL Festival
+DESCRIPTION:Details: https://www.happyvalleyimprov.com/xlfest.html
+LOCATION:State College\, PA
+END:VEVENT
+BEGIN:VEVENT
+UID:helsinki-international-festival-of-improvisation-deadline-2026-10-30@c
+ omedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+SUMMARY:Deadline: Helsinki International Festival of Improvisation (HiFi)
+DESCRIPTION:Submissions close for Helsinki International Festival of Impro
+ visation (HiFi). Details: https://www.improhelsinki.com/festival/
+LOCATION:Helsinki\, Finland
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: Helsinki International Festival of Improvisation (Hi
+ Fi)
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:helsinki-international-festival-of-improvisation-event-2027-05-26@come
+ dy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270526
+DTEND;VALUE=DATE:20270530
+SUMMARY:Helsinki International Festival of Improvisation (HiFi)
+DESCRIPTION:Details: https://www.improhelsinki.com/festival/
+LOCATION:Helsinki\, Finland
+END:VEVENT
+BEGIN:VEVENT
+UID:london-improv-festival-deadline-2027-01-10@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270110
+DTEND;VALUE=DATE:20270111
+SUMMARY:Deadline: The London Improv Festival
+DESCRIPTION:Submissions close for The London Improv Festival. Details: htt
+ ps://www.thelondonimprovfestival.com/
+LOCATION:London\, United Kingdom
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: The London Improv Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:london-improv-festival-event-2027-05-27@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270527
+DTEND;VALUE=DATE:20270531
+SUMMARY:The London Improv Festival
+DESCRIPTION:Details: https://www.thelondonimprovfestival.com/
+LOCATION:London\, United Kingdom
+END:VEVENT
+BEGIN:VEVENT
+UID:twin-cities-improv-festival-event-2027-06-10@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270610
+DTEND;VALUE=DATE:20270614
+SUMMARY:Twin Cities Improv Festival
+DESCRIPTION:Details: https://twincitiesimprovfestival.wordpress.com/
+LOCATION:Minneapolis\, MN
+END:VEVENT
+BEGIN:VEVENT
+UID:comedy-film-fest-2027-deadline-2027-01-31@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270131
+DTEND;VALUE=DATE:20270201
+SUMMARY:Deadline: The Comedy Film Festival
+DESCRIPTION:Extended deadline for The Comedy Film Festival. Details: https
+ ://filmfreeway.com/TheComedyFilmFestival
+LOCATION:Online / USA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: The Comedy Film Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:comedy-film-fest-2027-deadline-2027-03-05@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270305
+DTEND;VALUE=DATE:20270306
+SUMMARY:Deadline: The Comedy Film Festival
+DESCRIPTION:Final deadline for The Comedy Film Festival. Details: https://
+ filmfreeway.com/TheComedyFilmFestival
+LOCATION:Online / USA
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Deadline: The Comedy Film Festival
+TRIGGER:-P3D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:comedy-film-fest-2027-event-2027-05-14@comedy-stuff
+DTSTAMP:20261030T165644Z
+DTSTART;VALUE=DATE:20270514
+DTEND;VALUE=DATE:20270517
+SUMMARY:The Comedy Film Festival
+DESCRIPTION:Details: https://filmfreeway.com/TheComedyFilmFestival
+LOCATION:Online / USA
+END:VEVENT
+END:VCALENDAR
