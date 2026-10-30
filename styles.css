@@ -107,3 +107,49 @@ dd { margin: 0; }
 .signup input[type="email"] { flex: 1 1 240px; font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); }
 .signup .fine { margin: 10px 0 0; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- responsive ---------- */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-wrap: anywhere; overflow-x: hidden; }
+.wrap { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+.card, .soon-row > *, .soon-main, dd { min-width: 0; }
+.filters select { min-width: 0; max-width: 100%; }
+@media (min-width: 1280px) {
+  .wrap { max-width: 1240px; }
+}
+@media (min-width: 1700px) {
+  .wrap { max-width: 1480px; }
+  body { font-size: 17px; }
+}
+@media (max-width: 720px) {
+  .top { padding-top: 16px; }
+  .theme-toggle { position: static; display: block; margin: 0 0 10px auto; }
+  .tabs button { flex: 1; text-align: center; min-height: 44px; }
+  .filters input, .filters select, .filters .btn { font-size: 16px; }
+  .filters input { flex: 1 1 100%; }
+  .filters select { flex: 1 1 calc(50% - 4px); }
+  .share { flex: 1 1 100%; margin-left: 0; padding: 9px 12px; }
+  .closing-soon { padding: 12px 12px 4px; border-radius: 12px; }
+  .soon-row { grid-template-columns: 76px 1fr; }
+  .feed { gap: 6px 12px; }
+  .saved-bar .btn, .signup form .btn { flex: 1 1 100%; }
+  .signup { padding: 14px; }
+  .foot { gap: 6px 10px; }
+}
+@media (max-width: 420px) {
+  h2 { margin-top: 28px; }
+  #fSort, #jSort { flex-basis: 100%; }
+  .soon-row { grid-template-columns: 1fr; }
+  .soon-actions { grid-column: 1; }
+  .grid { gap: 12px; }
+  .card { padding: 14px; }
+  dl { grid-template-columns: minmax(0, auto) minmax(0, 1fr); gap: 4px 10px; }
+  .cal-row .btn { flex: 1 1 auto; text-align: center; }
+  .soon-actions .btn { flex: 1 1 auto; text-align: center; }
+}
+/* Touch screens: bigger tap targets. */
+@media (pointer: coarse) {
+  .btn { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+  .star { min-width: 44px; min-height: 44px; font-size: 1.5rem; }
+  .theme-toggle { min-height: 40px; }
+}
