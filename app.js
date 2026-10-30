@@ -38,7 +38,6 @@
     (children || []).forEach(function (c) { if (c) n.appendChild(c); });
     return n;
   }
-  function track(name, params) { if (window.gtag) window.gtag("event", name, params || {}); }
   function parse(d) { var p = d.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
   function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
   var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -114,11 +113,9 @@
     var end = kind === "deadline" ? d.date : f.eventEnd;
     var alarm = kind === "deadline" ? (CFG.reminderDaysBefore || 3) : 0;
     var g = el("a", { class: "btn", href: googleUrl(title, start, end, details, loc), target: "_blank", rel: "noopener", text: "Google" });
-    g.addEventListener("click", function () { track("add_to_calendar", { provider: "google", kind: kind, festival: f.id }); });
     var i = el("button", { class: "btn", type: "button", text: "Apple / Outlook (.ics)" });
     i.addEventListener("click", function () {
       downloadIcs(f.id + "-" + kind + ".ics", [icsEvent(f.id + "-" + kind + "-" + start, title, start, end, details, loc, alarm)]);
-      track("add_to_calendar", { provider: "ics", kind: kind, festival: f.id });
     });
     return el("div", { class: "cal-row" }, [label ? el("span", { text: label }) : null, g, i]);
   }
@@ -131,7 +128,6 @@
     f.formats.forEach(function (x) { badges.appendChild(el("span", { class: "badge fmt", text: x })); });
 
     var title = el("h3", {}, [el("a", { href: f.url, target: "_blank", rel: "noopener", text: f.name })]);
-    title.firstChild.addEventListener("click", function () { track("outbound_festival", { festival: f.id }); });
 
     var dl = el("dl");
     function row(k, v) { dl.appendChild(el("dt", { text: k })); dl.appendChild(el("dd", { text: v })); }
@@ -153,13 +149,10 @@
     src.appendChild(document.createTextNode("Source: "));
     (f.sources || []).forEach(function (s, i) {
       if (i) src.appendChild(document.createTextNode(", "));
-      var a = el("a", { href: s.url, target: "_blank", rel: "noopener", text: s.name });
-      a.addEventListener("click", function () { track("outbound_source", { source: s.name, festival: f.id }); });
-      src.appendChild(a);
+      src.appendChild(el("a", { href: s.url, target: "_blank", rel: "noopener", text: s.name }));
     });
     if (f.submitUrl) {
       var sub = el("a", { class: "btn primary", href: f.submitUrl, target: "_blank", rel: "noopener", text: "Submit" });
-      sub.addEventListener("click", function () { track("outbound_submit", { festival: f.id }); });
       cal.insertBefore(el("div", { class: "cal-row" }, [sub]), cal.firstChild);
     }
 
@@ -204,13 +197,10 @@
     var left = daysUntil(d.date);
     var when = left === 0 ? "Today" : left === 1 ? "Tomorrow" : "In " + left + " days";
     var name = el("a", { href: f.url, target: "_blank", rel: "noopener", text: f.name });
-    name.addEventListener("click", function () { track("outbound_festival", { festival: f.id, from: "closing_soon" }); });
     var meta = [fmt(d.date), d.fee, f.city + (f.country && f.country !== "US" ? ", " + f.country : ""), fmtRange(f.eventStart, f.eventEnd) !== "Dates TBA" ? "Event " + fmtRange(f.eventStart, f.eventEnd) : null].filter(Boolean).join(" · ");
     var actions = el("div", { class: "soon-actions" });
     if (f.submitUrl) {
-      var s = el("a", { class: "btn primary", href: f.submitUrl, target: "_blank", rel: "noopener", text: "Submit" });
-      s.addEventListener("click", function () { track("outbound_submit", { festival: f.id, from: "closing_soon" }); });
-      actions.appendChild(s);
+      actions.appendChild(el("a", { class: "btn primary", href: f.submitUrl, target: "_blank", rel: "noopener", text: "Submit" }));
     }
     var row = calRow("", f, "deadline", d);
     while (row.firstChild) actions.appendChild(row.firstChild);
@@ -234,10 +224,21 @@
   }
 
   // ---------- jobs ----------
+  // Days since the job was posted, or null when the posting date isn't known.
+  function jobAge(j) { return j.posted ? Math.max(0, -daysUntil(j.posted)) : null; }
+  function ageLabel(n) {
+    if (n == null) return "Posting date unknown";
+    if (n === 0) return "Posted today";
+    if (n === 1) return "Posted yesterday";
+    if (n < 60) return "Posted " + n + " days ago";
+    return "Posted " + Math.round(n / 30) + " months ago";
+  }
   function jobCard(j) {
     var title = el("h3", {}, [el("a", { href: j.url, target: "_blank", rel: "noopener", text: j.title })]);
-    title.firstChild.addEventListener("click", function () { track("outbound_job", { job: j.title, org: j.org }); });
-    var badges = el("div", { class: "badges" }, [el("span", { class: "badge fmt", text: j.type }), el("span", { class: "badge fmt", text: j.region })]);
+    var age = jobAge(j);
+    var badges = el("div", { class: "badges" }, [
+      el("span", { class: "badge " + (age == null ? "" : age <= 7 ? "open" : age > 30 ? "soon" : ""), text: ageLabel(age) }),
+      el("span", { class: "badge fmt", text: j.type }), el("span", { class: "badge fmt", text: j.region })]);
     if (j.schedule) badges.appendChild(el("span", { class: "badge fmt", text: j.schedule }));
     var dl = el("dl");
     if (j.pay) { dl.appendChild(el("dt", { text: "Pay" })); dl.appendChild(el("dd", { text: j.pay })); }
@@ -251,11 +252,13 @@
     ]);
   }
   function renderJobs() {
-    var q = $("jSearch").value.trim().toLowerCase(), region = $("jRegion").value, type = $("jType").value;
+    var q = $("jSearch").value.trim().toLowerCase(), region = $("jRegion").value, type = $("jType").value, maxAge = $("jAge").value;
     var list = JOBS.filter(function (j) {
       if (q && (j.title + " " + j.org + " " + j.location + " " + (j.notes || "")).toLowerCase().indexOf(q) < 0) return false;
       if (region && j.region !== region) return false;
       if (type && j.type !== type) return false;
+      if (maxAge === "unknown") return jobAge(j) == null;
+      if (maxAge && (jobAge(j) == null || jobAge(j) > +maxAge)) return false;
       return true;
     });
     var box = $("jList"); box.textContent = "";
@@ -266,9 +269,7 @@
   function renderBoards() {
     var ul = $("boards");
     BOARDS.forEach(function (b) {
-      var a = el("a", { href: b.url, target: "_blank", rel: "noopener" }, [el("span", { text: b.name }), el("br"), el("small", { text: b.region })]);
-      a.addEventListener("click", function () { track("outbound_board", { board: b.name }); });
-      ul.appendChild(el("li", {}, [a]));
+      ul.appendChild(el("li", {}, [el("a", { href: b.url, target: "_blank", rel: "noopener" }, [el("span", { text: b.name }), el("br"), el("small", { text: b.region })])]));
     });
   }
 
@@ -279,7 +280,6 @@
       $("tab-" + t).setAttribute("aria-selected", String(t === name));
     });
     if (location.hash.slice(1) !== name) history.replaceState(null, "", "#" + name);
-    track("view_tab", { tab: name });
   }
 
   // ---------- init ----------
@@ -296,7 +296,7 @@
   }
   renderSoon();
   ["fSearch", "fRegion", "fFormat", "fStatus"].forEach(function (id) { $(id).addEventListener("input", renderFestivals); });
-  ["jSearch", "jRegion", "jType"].forEach(function (id) { $(id).addEventListener("input", renderJobs); });
+  ["jSearch", "jRegion", "jType", "jAge"].forEach(function (id) { $(id).addEventListener("input", renderJobs); });
   $("tab-festivals").addEventListener("click", function () { showTab("festivals"); });
   $("tab-jobs").addEventListener("click", function () { showTab("jobs"); });
   renderFestivals(); renderJobs(); renderBoards();

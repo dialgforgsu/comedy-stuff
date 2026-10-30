@@ -264,7 +264,9 @@ async function fromEntertainmentCareers() {
       const html = await get(url);
       const ld = [...html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g)].map((m) => { try { return JSON.parse(m[1]); } catch { return null; } }).find((o) => o && o["@type"] === "JobPosting");
       if (!ld) continue;
-      const desc = cheerio.load(`<div>${ld.description || ""}</div>`)("div").text().replace(/\s+/g, " ").trim();
+      // Turn <br>/block tags into spaces first, or paragraphs run together ("AssociateJob Purpose...").
+      const spaced = (ld.description || "").replace(/<\s*(br|\/p|\/li|\/div|\/h\d)\s*\/?>/gi, " ");
+      const desc = cheerio.load(`<div>${spaced}</div>`)("div").text().replace(/\s+/g, " ").trim();
       const title = ld.title || "", org = ld.hiringOrganization?.name || "";
       if (!COMEDY_TEXT.test(`${title} ${desc}`)) continue;
       if (RESTAURANT.test(`${title} ${org} ${desc.slice(0, 400)}`)) { log("  skip restaurant:", title); continue; }

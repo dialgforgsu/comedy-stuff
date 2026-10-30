@@ -38,15 +38,7 @@ This writes `data/festivals.generated.js` and `data/jobs.generated.js`. Don't ed
 | --- | --- |
 | `data/festivals.js` | Festival entries. Fills gaps the feeds leave; add `override: true` to make your values win. |
 | `data/jobs.js` | Hand-picked jobs and the job-board search links. |
-| `data/config.js` | Site name, Google Analytics ID, "Submit a listing" link, reminder lead time. |
-
-## Turn on Google Analytics
-
-1. In Google Analytics, create a GA4 property and a **Web** data stream for your Pages URL.
-2. Copy the Measurement ID (`G-XXXXXXXXXX`) into `gaMeasurementId` in `data/config.js`.
-3. See visitor sources under **Reports → Acquisition → Traffic acquisition**; countries under **Demographics → Demographic details**.
-
-If you expect EU/UK visitors, consider adding a cookie-consent banner.
+| `data/config.js` | Site name, "Submit a listing" link, reminder lead time. |
 
 ## Preview locally
 

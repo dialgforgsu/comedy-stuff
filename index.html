@@ -9,19 +9,6 @@
   <meta property="og:description" content="Comedy festival submission deadlines, fees and jobs, with one-click calendar reminders.">
   <link rel="stylesheet" href="styles.css">
   <script src="data/config.js"></script>
-  <script>
-    // Google Analytics 4: only loads when a Measurement ID is set in data/config.js
-    (function () {
-      var id = (window.SITE_CONFIG || {}).gaMeasurementId;
-      if (!id) return;
-      var s = document.createElement("script");
-      s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
-      document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function () { dataLayer.push(arguments); };
-      gtag("js", new Date()); gtag("config", id);
-    })();
-  </script>
 </head>
 <body>
   <header class="top">
@@ -38,7 +25,7 @@
 
   <main class="wrap">
     <section id="festivals" role="tabpanel" aria-labelledby="tab-festivals">
-      <section class="soon" aria-labelledby="soonHead">
+      <section class="closing-soon" aria-labelledby="soonHead">
         <div class="soon-head"><h2 id="soonHead">Closing soon</h2><span id="soonCount" class="count"></span></div>
         <ol id="soonList" class="soon-list"></ol>
       </section>
@@ -66,6 +53,9 @@
         <select id="jRegion" aria-label="Region">
           <option value="">US &amp; remote</option><option value="US">On-site (US)</option><option value="Remote">Remote</option>
         </select>
+        <select id="jAge" aria-label="Posting age">
+          <option value="">Any posting age</option><option value="7">Last 7 days</option><option value="14">Last 14 days</option><option value="30">Last 30 days</option><option value="unknown">Date unknown</option>
+        </select>
         <select id="jType" aria-label="Type">
           <option value="">All types</option><option>Teaching</option><option>Production</option><option>Writing</option><option>Performing</option><option>Management</option><option>Marketing</option><option>Admin</option>
         </select>
@@ -81,7 +71,6 @@
   <footer class="wrap foot">
     <a id="submitLink" href="#">Submit a festival or job</a>
     <span>·</span>
-    <span>This site uses Google Analytics to count visits and see where they come from.</span>
     <span>Festival data from <a href="https://improvfestivals.org">improvfestivals.org</a> (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>), festival websites and hand edits.</span>
   </footer>
 
