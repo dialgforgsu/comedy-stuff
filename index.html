@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Improv Fest &amp; Jobs Board</title>
+  <meta name="description" content="Upcoming improv and comedy festivals with submission deadlines and fees, plus comedy jobs in the US and abroad. Add dates to Google or Apple Calendar.">
+  <meta property="og:title" content="Improv Fest & Jobs Board">
+  <meta property="og:description" content="Comedy festival submission deadlines, fees and jobs, with one-click calendar reminders.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data/config.js"></script>
+  <script>
+    // Google Analytics 4: only loads when a Measurement ID is set in data/config.js
+    (function () {
+      var id = (window.SITE_CONFIG || {}).gaMeasurementId;
+      if (!id) return;
+      var s = document.createElement("script");
+      s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { dataLayer.push(arguments); };
+      gtag("js", new Date()); gtag("config", id);
+    })();
+  </script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1 id="siteName">Improv Fest &amp; Jobs Board</h1>
+      <p class="lede">Festival submission deadlines, fees and dates, plus comedy jobs. Add anything to your calendar.</p>
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button role="tab" id="tab-festivals" aria-controls="festivals" aria-selected="true">Festivals</button>
+        <button role="tab" id="tab-jobs" aria-controls="jobs" aria-selected="false">Jobs</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="festivals" role="tabpanel" aria-labelledby="tab-festivals">
+      <div class="filters">
+        <input id="fSearch" type="search" placeholder="Search festivals or cities" aria-label="Search festivals">
+        <select id="fRegion" aria-label="Region">
+          <option value="">All regions</option><option value="US">United States</option><option value="Intl">International</option>
+        </select>
+        <select id="fFormat" aria-label="Format">
+          <option value="">All formats</option><option>Improv</option><option>Sketch</option><option>Stand-up</option><option>Mixed</option><option>Film</option>
+        </select>
+        <select id="fStatus" aria-label="Status">
+          <option value="active">Open &amp; upcoming</option><option value="open">Open now</option><option value="all">Everything</option><option value="closed">Closed</option>
+        </select>
+      </div>
+      <p id="fCount" class="count" aria-live="polite"></p>
+      <div id="fList" class="grid"></div>
+      <p class="fine">Deadlines and fees change. Cards marked <b>Verify</b> have not been confirmed on the festival's own site, so check before you pay a fee. Last data update: <span id="fUpdated"></span>.</p>
+    </section>
+
+    <section id="jobs" role="tabpanel" aria-labelledby="tab-jobs" hidden>
+      <div class="filters">
+        <input id="jSearch" type="search" placeholder="Search jobs" aria-label="Search jobs">
+        <select id="jRegion" aria-label="Region">
+          <option value="">US, remote &amp; international</option><option value="US">United States</option><option value="Remote">Remote</option><option value="International">International</option>
+        </select>
+        <select id="jType" aria-label="Type">
+          <option value="">All types</option><option>Teaching</option><option>Production</option><option>Writing</option><option>Performing</option><option>Admin</option>
+        </select>
+      </div>
+      <p id="jCount" class="count" aria-live="polite"></p>
+      <div id="jList" class="grid"></div>
+      <h2>Keep searching</h2>
+      <ul id="boards" class="boards"></ul>
+      <p class="fine">Listings go stale. Confirm a job is still open on the employer's site.</p>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <a id="submitLink" href="#">Submit a festival or job</a>
+    <span>·</span>
+    <span>This site uses Google Analytics to count visits and see where they come from.</span>
+  </footer>
+
+  <script src="data/festivals.js"></script>
+  <script src="data/jobs.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
