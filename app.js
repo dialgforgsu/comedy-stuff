@@ -195,7 +195,7 @@
   }
 
   // ---------- closing soon ----------
-  var SOON_DAYS = 30;
+  var SOON_DAYS = 7;
   function nextDeadline(f) {
     for (var i = 0; i < f.deadlines.length; i++) if (daysUntil(f.deadlines[i].date) >= 0) return f.deadlines[i];
     return null;
