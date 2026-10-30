@@ -238,6 +238,8 @@ function typeOf(t) {
   if (/produc|booker|booking|programm/i.test(t)) return "Production";
   if (/writer|writing|editor/i.test(t)) return "Writing";
   if (/perform|cast|actor|comedian|host/i.test(t)) return "Performing";
+  if (/market|social|communications|brand|publicist/i.test(t)) return "Marketing";
+  if (/director|manager|supervisor|head of/i.test(t)) return "Management";
   return "Admin";
 }
 const SCHEDULE = { FULL_TIME: "Full-time", PART_TIME: "Part-time", CONTRACTOR: "Contract", TEMPORARY: "Temporary", INTERN: "Internship", PER_DIEM: "Per diem" };

@@ -55,6 +55,22 @@ dd { margin: 0; }
 .boards a { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink); text-decoration: none; }
 .boards a:hover { border-color: var(--accent); }
 .boards small { color: var(--muted); }
+.updated { display: block; margin: 0 0 8px; color: var(--muted); font-size: .85rem; }
+.updated:not([datetime]) { display: none; }
+.soon { background: var(--soon-bg); border: 1px solid var(--soon); border-radius: 14px; padding: 14px 16px 6px; margin-bottom: 8px; }
+.soon-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.soon h2, .all-head { margin: 0; font-size: 1.15rem; }
+.all-head { margin-top: 28px; margin-bottom: 12px; }
+.soon .count { color: var(--soon); margin: 0; }
+.soon-list { list-style: none; margin: 10px 0 0; padding: 0; }
+.soon-row { display: grid; grid-template-columns: 92px 1fr; gap: 6px 14px; padding: 12px 0; border-top: 1px solid var(--line); }
+.soon-when { font-weight: 700; color: var(--soon); }
+.soon-row.urgent .soon-when { color: var(--accent); }
+.soon-main strong a { color: var(--ink); text-decoration-color: var(--line); text-underline-offset: 3px; }
+.soon-main .loc { color: var(--ink); opacity: .75; }
+.soon-actions { grid-column: 2; display: flex; flex-wrap: wrap; gap: 6px; }
+.soon .empty { border: 0; padding: 12px 0; text-align: left; grid-column: auto; }
+@media (max-width: 520px) { .soon-row { grid-template-columns: 1fr; } .soon-actions { grid-column: 1; } }
 .src { margin: 0; font-size: .8rem; color: var(--muted); }
 .src a { color: var(--muted); }
 .fine a { color: inherit; }

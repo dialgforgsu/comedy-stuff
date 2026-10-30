@@ -8,12 +8,23 @@
   var BOARDS = window.JOB_BOARDS || [];
   // US-only, no restaurant roles, even if a hand-edited entry slips one in.
   var RESTAURANT = /restaurant|waiter|waitress|waitstaff|\bserver\b|bartend|barista|busser|hostess|line cook|\bcook\b|kitchen|dishwash|food (?:and|&) beverage|catering|sous chef|\bchef\b|food runner/i;
-  var seenJobs = {};
-  var JOBS = (window.JOBS || []).concat(window.JOBS_GENERATED || []).filter(function (j) {
-    if (seenJobs[j.url]) return false; seenJobs[j.url] = true;
-    if (j.region !== "US" && j.region !== "Remote") return false;
-    return !RESTAURANT.test(j.title + " " + j.org);
-  }).sort(function (a, b) { return (b.posted || b.checked || "").localeCompare(a.posted || a.checked || ""); });
+  // The same job can arrive hand-listed and auto-pulled: merge them, keeping whichever has a direct link.
+  function key(s) { return String(s || "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
+  var byKey = {}, JOBS = [];
+  (window.JOBS || []).concat(window.JOBS_GENERATED || []).forEach(function (j) {
+    if (j.region !== "US" && j.region !== "Remote") return;
+    if (RESTAURANT.test(j.title + " " + j.org)) return;
+    // Search links are shared by many jobs, so only direct links count as a URL match.
+    var k = key(j.title) + "|" + key(j.org), prev = (!j.searchLink && byKey[j.url]) || byKey[k];
+    if (prev) {
+      if (prev.searchLink && !j.searchLink) { j.pay = j.pay || prev.pay; prev.url = j.url; prev.searchLink = false; prev.source = j.source || prev.source; }
+      ["pay", "schedule", "notes", "posted"].forEach(function (f) { if (!prev[f] && j[f]) prev[f] = j[f]; });
+      return;
+    }
+    byKey[k] = j; if (!j.searchLink) byKey[j.url] = j;
+    JOBS.push(j);
+  });
+  JOBS.sort(function (a, b) { return (b.posted || "").localeCompare(a.posted || "") || (a.title < b.title ? -1 : 1); });
   var $ = function (id) { return document.getElementById(id); };
 
   // ---------- helpers ----------
@@ -109,7 +120,7 @@
       downloadIcs(f.id + "-" + kind + ".ics", [icsEvent(f.id + "-" + kind + "-" + start, title, start, end, details, loc, alarm)]);
       track("add_to_calendar", { provider: "ics", kind: kind, festival: f.id });
     });
-    return el("div", { class: "cal-row" }, [el("span", { text: label }), g, i]);
+    return el("div", { class: "cal-row" }, [label ? el("span", { text: label }) : null, g, i]);
   }
 
   // ---------- festival cards ----------
@@ -183,6 +194,45 @@
     list.forEach(function (f) { box.appendChild(festivalCard(f)); });
   }
 
+  // ---------- closing soon ----------
+  var SOON_DAYS = 30;
+  function nextDeadline(f) {
+    for (var i = 0; i < f.deadlines.length; i++) if (daysUntil(f.deadlines[i].date) >= 0) return f.deadlines[i];
+    return null;
+  }
+  function soonRow(f, d) {
+    var left = daysUntil(d.date);
+    var when = left === 0 ? "Today" : left === 1 ? "Tomorrow" : "In " + left + " days";
+    var name = el("a", { href: f.url, target: "_blank", rel: "noopener", text: f.name });
+    name.addEventListener("click", function () { track("outbound_festival", { festival: f.id, from: "closing_soon" }); });
+    var meta = [fmt(d.date), d.fee, f.city + (f.country && f.country !== "US" ? ", " + f.country : ""), fmtRange(f.eventStart, f.eventEnd) !== "Dates TBA" ? "Event " + fmtRange(f.eventStart, f.eventEnd) : null].filter(Boolean).join(" · ");
+    var actions = el("div", { class: "soon-actions" });
+    if (f.submitUrl) {
+      var s = el("a", { class: "btn primary", href: f.submitUrl, target: "_blank", rel: "noopener", text: "Submit" });
+      s.addEventListener("click", function () { track("outbound_submit", { festival: f.id, from: "closing_soon" }); });
+      actions.appendChild(s);
+    }
+    var row = calRow("", f, "deadline", d);
+    while (row.firstChild) actions.appendChild(row.firstChild);
+    return el("li", { class: "soon-row" + (left <= 7 ? " urgent" : "") }, [
+      el("div", { class: "soon-when", text: when }),
+      el("div", { class: "soon-main" }, [el("strong", {}, [name]), el("div", { class: "loc", text: meta }), f.confirmed ? null : el("span", { class: "badge check", text: "Verify" })]),
+      actions
+    ]);
+  }
+  function renderSoon() {
+    var items = [];
+    FESTIVALS.forEach(function (f) {
+      var d = nextDeadline(f);
+      if (d && daysUntil(d.date) <= SOON_DAYS && status(f).key !== "closed") items.push({ f: f, d: d });
+    });
+    items.sort(function (a, b) { return a.d.date.localeCompare(b.d.date); });
+    var box = $("soonList"); box.textContent = "";
+    $("soonCount").textContent = items.length ? items.length + (items.length === 1 ? " festival" : " festivals") + " in the next " + SOON_DAYS + " days" : "";
+    if (!items.length) box.appendChild(el("li", { class: "empty", text: "No known deadlines in the next " + SOON_DAYS + " days." }));
+    items.forEach(function (x) { box.appendChild(soonRow(x.f, x.d)); });
+  }
+
   // ---------- jobs ----------
   function jobCard(j) {
     var title = el("h3", {}, [el("a", { href: j.url, target: "_blank", rel: "noopener", text: j.title })]);
@@ -197,7 +247,7 @@
     return el("article", { class: "card" }, [
       title, el("div", { class: "loc", text: j.org + " · " + j.location }), badges,
       j.notes ? el("p", { class: "notes", text: j.notes }) : null, dl,
-      el("div", { class: "cal" }, [el("a", { class: "btn primary", href: j.url, target: "_blank", rel: "noopener", text: "View listing" })])
+      el("div", { class: "cal" }, [el("a", { class: "btn primary", href: j.url, target: "_blank", rel: "noopener", text: j.searchLink ? "Find it on " + (j.source || "the board") : "View listing" })])
     ]);
   }
   function renderJobs() {
@@ -236,9 +286,15 @@
   document.title = CFG.siteName || document.title;
   $("siteName").textContent = CFG.siteName || $("siteName").textContent;
   $("submitLink").href = CFG.submitUrl || "#";
-  var gen = (window.FESTIVALS_META || {}).generatedAt;
-  var latest = gen ? gen.slice(0, 10) : FESTIVALS.map(function (f) { return f.checked; }).sort().pop();
-  $("fUpdated").textContent = latest ? fmt(latest) : "unknown";
+  // Freshness stamp: the newest time the updater ran, shown in the visitor's own time zone.
+  var stamps = [(window.FESTIVALS_META || {}).generatedAt, (window.JOBS_META || {}).generatedAt].filter(Boolean).sort();
+  var newest = stamps.length ? new Date(stamps[stamps.length - 1]) : null;
+  if (newest && !isNaN(newest)) {
+    var t = $("updated");
+    t.textContent = "Data updated " + newest.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) + " (" + (newest.toLocaleTimeString(undefined, { timeZoneName: "short" }).split(" ").pop()) + ")";
+    t.setAttribute("datetime", newest.toISOString());
+  }
+  renderSoon();
   ["fSearch", "fRegion", "fFormat", "fStatus"].forEach(function (id) { $(id).addEventListener("input", renderFestivals); });
   ["jSearch", "jRegion", "jType"].forEach(function (id) { $(id).addEventListener("input", renderJobs); });
   $("tab-festivals").addEventListener("click", function () { showTab("festivals"); });
