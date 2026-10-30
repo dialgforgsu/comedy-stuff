@@ -1,9 +1,19 @@
 (function () {
   "use strict";
   var CFG = window.SITE_CONFIG || {};
-  var FESTIVALS = window.FESTIVALS || [];
-  var JOBS = window.JOBS || [];
+  // Generated feeds (npm run update) win; hand-edited files are the fallback.
+  var FESTIVALS = (window.FESTIVALS_GENERATED || window.FESTIVALS || []).map(function (f) {
+    f.deadlines = f.deadlines || []; f.formats = f.formats || []; f.country = f.country || ""; return f;
+  });
   var BOARDS = window.JOB_BOARDS || [];
+  // US-only, no restaurant roles, even if a hand-edited entry slips one in.
+  var RESTAURANT = /restaurant|waiter|waitress|waitstaff|\bserver\b|bartend|barista|busser|hostess|line cook|\bcook\b|kitchen|dishwash|food (?:and|&) beverage|catering|sous chef|\bchef\b|food runner/i;
+  var seenJobs = {};
+  var JOBS = (window.JOBS || []).concat(window.JOBS_GENERATED || []).filter(function (j) {
+    if (seenJobs[j.url]) return false; seenJobs[j.url] = true;
+    if (j.region !== "US" && j.region !== "Remote") return false;
+    return !RESTAURANT.test(j.title + " " + j.org);
+  }).sort(function (a, b) { return (b.posted || b.checked || "").localeCompare(a.posted || a.checked || ""); });
   var $ = function (id) { return document.getElementById(id); };
 
   // ---------- helpers ----------
@@ -47,6 +57,8 @@
       if (left <= 14) return { key: "soon", label: left === 0 ? "Closes today" : "Closes in " + left + (left === 1 ? " day" : " days"), rank: 0, left: left };
       return { key: "open", label: "Open", rank: 1, left: left };
     }
+    if (f.submissionStatus === "closed") return { key: "closed", label: "Closed", rank: 3 };
+    if (f.submissionStatus === "open") return { key: "open", label: "Open (no deadline listed)", rank: 1, left: 9998 };
     if (f.submissionOpens && daysUntil(f.submissionOpens) > 0) return { key: "upcoming", label: "Opens " + fmt(f.submissionOpens), rank: 2, left: 9999 };
     if (f.eventStart && daysUntil(f.eventStart) < 0) return { key: "closed", label: "Ended", rank: 3 };
     return { key: "unknown", label: "Deadline unknown", rank: 2, left: 9999 };
@@ -119,17 +131,31 @@
     } else {
       row("Deadline", "Not published, check site");
     }
-    if (!f.deadlines.some(function (d) { return d.fee; })) row("Fee", "Not published, check site");
+    if (!f.deadlines.some(function (d) { return d.fee; })) row("Fee", f.fee || "Not published, check site");
 
     var cal = el("div", { class: "cal" });
     var future = f.deadlines.filter(function (d) { return daysUntil(d.date) >= 0; });
     future.forEach(function (d) { cal.appendChild(calRow("Remind me: " + d.label.toLowerCase() + " (" + fmt(d.date) + ")", f, "deadline", d)); });
     if (f.eventStart && daysUntil(f.eventEnd || f.eventStart) >= 0) cal.appendChild(calRow("Add event dates (" + fmtRange(f.eventStart, f.eventEnd) + ")", f, "event"));
 
+    var src = el("p", { class: "src" });
+    src.appendChild(document.createTextNode("Source: "));
+    (f.sources || []).forEach(function (s, i) {
+      if (i) src.appendChild(document.createTextNode(", "));
+      var a = el("a", { href: s.url, target: "_blank", rel: "noopener", text: s.name });
+      a.addEventListener("click", function () { track("outbound_source", { source: s.name, festival: f.id }); });
+      src.appendChild(a);
+    });
+    if (f.submitUrl) {
+      var sub = el("a", { class: "btn primary", href: f.submitUrl, target: "_blank", rel: "noopener", text: "Submit" });
+      sub.addEventListener("click", function () { track("outbound_submit", { festival: f.id }); });
+      cal.insertBefore(el("div", { class: "cal-row" }, [sub]), cal.firstChild);
+    }
+
     return el("article", { class: "card" }, [
-      title, el("div", { class: "loc", text: f.city + (f.country !== "US" ? ", " + f.country : "") }),
+      title, el("div", { class: "loc", text: f.city + (f.country && f.country !== "US" ? ", " + f.country : "") }),
       badges, dl, f.notes ? el("p", { class: "notes", text: f.notes }) : null,
-      cal.children.length ? cal : null
+      cal.children.length ? cal : null, f.sources && f.sources.length ? src : null
     ]);
   }
 
@@ -165,7 +191,9 @@
     if (j.schedule) badges.appendChild(el("span", { class: "badge fmt", text: j.schedule }));
     var dl = el("dl");
     if (j.pay) { dl.appendChild(el("dt", { text: "Pay" })); dl.appendChild(el("dd", { text: j.pay })); }
+    if (j.posted) { dl.appendChild(el("dt", { text: "Posted" })); dl.appendChild(el("dd", { text: fmt(j.posted) })); }
     dl.appendChild(el("dt", { text: "Checked" })); dl.appendChild(el("dd", { text: fmt(j.checked) }));
+    if (j.source) { dl.appendChild(el("dt", { text: "Source" })); dl.appendChild(el("dd", { text: j.source })); }
     return el("article", { class: "card" }, [
       title, el("div", { class: "loc", text: j.org + " · " + j.location }), badges,
       j.notes ? el("p", { class: "notes", text: j.notes }) : null, dl,
@@ -208,7 +236,8 @@
   document.title = CFG.siteName || document.title;
   $("siteName").textContent = CFG.siteName || $("siteName").textContent;
   $("submitLink").href = CFG.submitUrl || "#";
-  var latest = FESTIVALS.map(function (f) { return f.checked; }).sort().pop();
+  var gen = (window.FESTIVALS_META || {}).generatedAt;
+  var latest = gen ? gen.slice(0, 10) : FESTIVALS.map(function (f) { return f.checked; }).sort().pop();
   $("fUpdated").textContent = latest ? fmt(latest) : "unknown";
   ["fSearch", "fRegion", "fFormat", "fStatus"].forEach(function (id) { $(id).addEventListener("input", renderFestivals); });
   ["jSearch", "jRegion", "jType"].forEach(function (id) { $(id).addEventListener("input", renderJobs); });

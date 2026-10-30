@@ -39,14 +39,16 @@ window.JOBS = [
   }
 ];
 
-// Places to keep looking. These are search pages, not single listings.
+// Search links (US only). Indeed and ZipRecruiter forbid automated collection, so these open a
+// pre-filtered search on their sites instead of being scraped. Jobs from EntertainmentCareers.net
+// are pulled automatically into data/jobs.generated.js by `npm run update`.
 window.JOB_BOARDS = [
-  { name: "ZipRecruiter: Improv jobs", region: "US", url: "https://www.ziprecruiter.com/Jobs/Improv" },
-  { name: "ZipRecruiter: Comedy jobs", region: "US", url: "https://www.ziprecruiter.com/Jobs/Comedy" },
-  { name: "UCB careers", region: "US", url: "https://www.smartrecruiters.com/UprightCitizensBrigade1" },
-  { name: "Playbill job board", region: "US", url: "https://playbill.com/jobs" },
-  { name: "Backstage", region: "US", url: "https://www.backstage.com/" },
-  { name: "Indeed: improv instructor", region: "International", url: "https://www.indeed.com/jobs?q=improv+instructor" },
-  { name: "Arts Jobs (UK)", region: "International", url: "https://www.artsjobs.org.uk/" },
-  { name: "Mandy", region: "International", url: "https://www.mandy.com/" }
+  { name: "Indeed: improv", region: "United States", url: "https://www.indeed.com/jobs?q=improv&l=United+States" },
+  { name: "Indeed: comedy writer / producer", region: "United States", url: "https://www.indeed.com/jobs?q=comedy+writer+OR+comedy+producer&l=United+States" },
+  { name: "ZipRecruiter: improv", region: "United States", url: "https://www.ziprecruiter.com/Jobs/Improv" },
+  { name: "ZipRecruiter: comedy", region: "United States", url: "https://www.ziprecruiter.com/Jobs/Comedy" },
+  { name: "EntertainmentCareers.net", region: "United States", url: "https://www.entertainmentcareers.net/" },
+  { name: "UCB careers", region: "United States", url: "https://www.smartrecruiters.com/UprightCitizensBrigade1" },
+  { name: "Playbill job board", region: "United States", url: "https://playbill.com/jobs" },
+  { name: "Backstage", region: "United States", url: "https://www.backstage.com/" }
 ];

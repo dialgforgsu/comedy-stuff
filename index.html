@@ -43,7 +43,7 @@
           <option value="">All regions</option><option value="US">United States</option><option value="Intl">International</option>
         </select>
         <select id="fFormat" aria-label="Format">
-          <option value="">All formats</option><option>Improv</option><option>Sketch</option><option>Stand-up</option><option>Mixed</option><option>Film</option>
+          <option value="">All formats</option><option>Improv</option><option>Sketch</option><option>Stand-up</option><option>Musical</option><option>Mixed</option><option>Film</option>
         </select>
         <select id="fStatus" aria-label="Status">
           <option value="active">Open &amp; upcoming</option><option value="open">Open now</option><option value="all">Everything</option><option value="closed">Closed</option>
@@ -58,7 +58,7 @@
       <div class="filters">
         <input id="jSearch" type="search" placeholder="Search jobs" aria-label="Search jobs">
         <select id="jRegion" aria-label="Region">
-          <option value="">US, remote &amp; international</option><option value="US">United States</option><option value="Remote">Remote</option><option value="International">International</option>
+          <option value="">US &amp; remote</option><option value="US">On-site (US)</option><option value="Remote">Remote</option>
         </select>
         <select id="jType" aria-label="Type">
           <option value="">All types</option><option>Teaching</option><option>Production</option><option>Writing</option><option>Performing</option><option>Admin</option>
@@ -66,9 +66,9 @@
       </div>
       <p id="jCount" class="count" aria-live="polite"></p>
       <div id="jList" class="grid"></div>
-      <h2>Keep searching</h2>
+      <h2>Search the big boards (US only)</h2>
       <ul id="boards" class="boards"></ul>
-      <p class="fine">Listings go stale. Confirm a job is still open on the employer's site.</p>
+      <p class="fine">Listings are pulled from <a href="https://www.entertainmentcareers.net/">EntertainmentCareers.net</a>, comedy-related and US-based only, restaurant roles excluded. Indeed and ZipRecruiter don't allow automated collection, so those links open a pre-filtered search on their sites. Confirm a job is still open before applying.</p>
     </section>
   </main>
 
@@ -76,10 +76,13 @@
     <a id="submitLink" href="#">Submit a festival or job</a>
     <span>·</span>
     <span>This site uses Google Analytics to count visits and see where they come from.</span>
+    <span>Festival data from <a href="https://improvfestivals.org">improvfestivals.org</a> (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>), festival websites and hand edits.</span>
   </footer>
 
   <script src="data/festivals.js"></script>
+  <script src="data/festivals.generated.js"></script>
   <script src="data/jobs.js"></script>
+  <script src="data/jobs.generated.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,31 @@
+name: Update festival and job data
+
+on:
+  schedule:
+    - cron: "17 11 * * *"   # daily, 11:17 UTC
+  workflow_dispatch:         # "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run update
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/festivals.generated.js data/jobs.generated.js
+          if git diff --cached --quiet; then echo "No data changes"; else
+            git commit -m "Refresh festival and job data"
+            git push
+          fi
