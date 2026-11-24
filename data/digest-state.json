@@ -1,18 +1,7 @@
 {
- "lastDigest": "2026-11-09",
+ "lastDigest": "2026-11-24",
  "festivalIds": [
-  "birmingham-improv-festival",
-  "bellingham-improv-festival",
-  "ifo-impro-fest-bielefeld",
-  "out-of-bounds-comedy-festival",
-  "tucson-comedy-arts-festival",
-  "queer-and-funny-improv-festival",
-  "improfest-krakow",
-  "flyover-comedy-festival",
-  "new-south-comedy-festival",
-  "montclair-comedy-festival",
   "impulsez",
-  "phit-phest",
   "impro-invention-2026",
   "improv-festivus",
   "sf-sketchfest",
@@ -42,6 +31,7 @@
   "vietnam-improv-festival",
   "liverpool-improvisation-festival",
   "xl-festival",
+  "unscripted-shakespeare-festival",
   "helsinki-international-festival-of-improvisation",
   "321-mainz",
   "london-improv-festival",
@@ -49,6 +39,7 @@
   "yes-ann-improv-fest",
   "midsummer-comedy-fest",
   "brisbane-improv-festival",
+  "phit-phest-2026",
   "comedy-film-fest-2027"
  ],
  "jobKeys": [
@@ -89,14 +80,13 @@
   "improvandcomedyinstructor|athletesglobal",
   "actorfacilitator|cunyresearchfoundation",
   "triviagameseventhost|coursehorse",
-  "managerbusinesslegalaffairsoriginalcomedyformats|netflix",
-  "executiveassistantinmusicandcomedytouring|caa",
-  "managernetflixisajokesocialmarketing|netflix",
-  "comedyvideographerandscriptwriter|reillytalent",
+  "springinternshipcomedymanagement|artisangroupentertainment",
   "operationssupervisor|cobbscomedy",
-  "fallinterncomedymanagement|artisangroupentertainment",
+  "interntalentdiscoveryhorrorampcomedy|sobinifilms",
+  "assistantcomedytouring|caa",
   "comedytourmarketingdirector|livenation",
-  "communicationsmanagernonfictionandstandup|netflix",
-  "musicandcomedybookingassistant|caa"
+  "musicandcomedybookingassistant|caa",
+  "managerbusinessamplegalaffairsoriginalcomedyformats|netflix",
+  "executiveassistantinmusicandcomedytouring|caa"
  ]
 }
